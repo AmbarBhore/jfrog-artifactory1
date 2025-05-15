@@ -18,7 +18,7 @@ pipeline {
 	     }
 	    stage('Deploy Jar to JFrog') {
 		steps {
-			scripts {
+			script {
 				def server = Artifactory.server 'jfrog-cred'
 				def uploadSpec = """{
 					"files":[{
