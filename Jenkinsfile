@@ -23,7 +23,7 @@ pipeline {
 				def uploadSpec = """{
 					"files":[{
 					    "pattern":"target/*.jar",
-					    "target:":"maven-local/com/ambar/rmm/"
+					    "target":"maven-local/com/ambar/rmm/"
 					 }] 
 				}"""
 				server.upload spec: uploadSpec
