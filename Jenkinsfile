@@ -19,14 +19,14 @@ pipeline {
 	    stage('Deploy Jar to JFrog') {
 		steps {
 			script {
-				def server = Artifactory.server 'jfrog-cred'
+				def server = Artifactory.newServer url: 'http://192.168.0.102:8082/artifactory', credentialsId: 'jfrog-cred'
 				def uploadSpec = """{
 					"files":[{
 					    "pattern":"target/*.jar",
 					    "target:":"maven-local/com/ambar/rmm/"
 					 }] 
 				}"""
-				server.upload(uploadSpec)
+				server.upload spec: uploadSpec
 			}
 		}
 	     }			
