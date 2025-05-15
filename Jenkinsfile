@@ -16,5 +16,19 @@ pipeline {
 			sh 'mvn clean package'
 		}
 	     }
+	    stage('Deploy Jar to JFrog') {
+		steps {
+			scripts {
+				def server = Artifactory.server 'jfrog-cred'
+				def uploadSpec = """{
+					"files":[{
+					    "pattern":"target/*.jar",
+					    "target:":"maven-local/com/ambar/rmm/"
+					 }] 
+				}"""
+				server.upload(uploadSpec)
+			}
+		}
+	     }			
 	}
 }	
