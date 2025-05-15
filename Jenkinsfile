@@ -8,7 +8,7 @@ pipeline {
 	stages{
 	    stage('checkout code') {
 		steps {
-			git 'https://github.com/AmbarBhore/jfrog-artifactory1.git'
+			git branch: 'main', credentialsId: 'github-config', url: 'https://github.com/AmbarBhore/jfrog-artifactory1.git'
 		}
              }
 	     stage('Build Code') {
