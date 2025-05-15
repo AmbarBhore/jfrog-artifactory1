@@ -11,5 +11,10 @@ pipeline {
 			git 'https://github.com/AmbarBhore/jfrog-artifactory1.git'
 		}
              }
+	     stage('Build Code') {
+		steps {
+			sh 'mvn clean install'
+		}
+	     }
 	}
 }	
