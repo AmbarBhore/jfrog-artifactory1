@@ -26,7 +26,9 @@ pipeline {
 					    "target":"maven-local/com/ambar/rmm/"
 					 }] 
 				}"""
-				server.upload spec: uploadSpec
+				def buildInfo = Artifactory.newBuildInfo()
+				server.upload(spec: uploadSpec, buildInfo: buildInfo)
+				server.publishBuildInfo(buildInfo)
 			}
 		}
 	     }			
