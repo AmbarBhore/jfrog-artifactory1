@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy Jar to JFrog') {
             steps {
                 script {
-                    def server = Artifactory.server("${ARTIFACTORY_CRED}")
+                    def server = Artifactory.newServer url: "${ARTIFACTORY_URL}", credentialsId: "${ARTIFACTORY_CRED}"
                     def uploadSpec = """{
                         "files": [{
                             "pattern": "target/*.jar",
