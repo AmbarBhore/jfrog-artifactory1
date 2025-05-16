@@ -48,6 +48,25 @@ pipeline {
 			'''
 		}
 	    }
-	}   	
+	}
+	stage("Deploy to kubernetes") {
+		steps {
+			withCredentials([file(credentialsId: "${KUBECONFIG_CRED_ID}", variable: 'kubeconfig')}) {
+			     sh '''
+				export KUBECONFIG=$kubeconfig
+		
+				kubectl config current-context
+				kubectl get nodes
+				
+				echo "Applying deployment and service"
+				kubectl apply -f k8s/deployment.yaml
+				kubectl apply -f k8s/service.yaml
+				
+				echo "updating image with build tag: $BUILD_NUMBER"
+				kubectl set image deployment/rmm-agent-jfrog-deploy rmm-agent-jfrog-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
+			     '''
+			}
+		}
+	}	
     }
 }

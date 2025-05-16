@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmm-agent-jfrog-deploy
+spec:
+  type: NodePort
+  selector:
+    app: rmm-agent-jfrog-deploy
+  ports:
+  - port: 80
+    targetPort: 9090
+    nodePort: 30010

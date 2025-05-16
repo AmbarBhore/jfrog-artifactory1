@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: rmm-agent-jfrog-deploy
+  labels:
+      app: rmm-agent-jfrog-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLebels:
+      app: rmm-agent-jfrog-deploy
+  template:
+    metadata:
+      labels:
+        app: rmm-agent-jfrog-deploy
+    spec:
+      containers:
+      - name: rmm-agent-jfrog-deploy
+        image: ambarbhore1234/rmm-agent
+        ports:
+        - containerPort: 9090
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9090
+          initialDelaySeconds: 5
+          periodSeconds: 10
