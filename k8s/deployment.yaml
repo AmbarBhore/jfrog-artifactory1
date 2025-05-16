@@ -18,10 +18,10 @@ spec:
       - name: rmm-agent-jfrog-deploy
         image: ambarbhore1234/rmm-agent:45
         ports:
-        - containerPort: 9090
+        - containerPort: 8080
         readinessProbe:
           httpGet:
             path: /health
-            port: 9090
+            port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
