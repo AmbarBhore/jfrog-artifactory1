@@ -36,11 +36,15 @@ pipeline {
 	    steps {
 		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 			sh '''
-			    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+			    DOCKER_TAG=$BUILD_NUMBER
+			    echo "building an docker image"
+			    docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+			    
+			    echo "logging into the docker hub"
 				
-			    IMAGE_TAG=${DOCKER_IMAGE}:${BUILD_NUMBER}
-		  	    docker build -t $IMAGE_TAG .
-			    docker push $IMAGE_TAG
+			    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+			    docker push $DOCKE_IMAGE:$IMAGE_TAG
 			'''
 		}
 	    }
