@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: rmm-agent-jfrog-deploy
-        image: ambarbhore1234/rmm-agent
+        image: ambarbhore1234/rmm-agent:45
         ports:
         - containerPort: 9090
         readinessProbe:
