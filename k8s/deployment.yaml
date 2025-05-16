@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: deployment
+kind: Deployment
 metadata:
   name: rmm-agent-jfrog-deploy
   labels:
@@ -24,4 +24,4 @@ spec:
             path: /health
             port: 9090
           initialDelaySeconds: 5
-          periodSeconds: 10
+          periodSeconds: 1i
