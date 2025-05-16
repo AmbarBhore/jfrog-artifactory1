@@ -32,5 +32,18 @@ pipeline {
                 }
             }
         }
+	stage('Build & Push Image to Docker Hub') {
+	    steps {
+		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+			sh '''
+			    echo "$DOCKER_PASS" | docker login -u $DOCKER_USER" --password-stdin
+				
+			    IMAGE_TAG=${DOCKER_IMAGE}:${BUILD_NUMBER}
+		  	    docker build -t $IMAGE_TAG .
+			    docker push $IMAGE_TAG
+			'''
+		}
+	    }
+	}   	
     }
 }
