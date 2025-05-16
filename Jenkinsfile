@@ -3,7 +3,7 @@ pipeline {
     environment {
         ARTIFACTORY_URL = 'http://192.168.0.102:8082/artifactory'
         ARTIFACTORY_CRED = 'jfrog-cred'
-        DOCKER_IMAGE = 'rmm-agent'
+        DOCKER_IMAGE = 'ambarbhore1234/rmm-agent'
     }
     stages {
         stage('Checkout Code') {
