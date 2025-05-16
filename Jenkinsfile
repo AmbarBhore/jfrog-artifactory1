@@ -36,7 +36,7 @@ pipeline {
 	    steps {
 		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
 			sh '''
-			    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+			    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 				
 			    IMAGE_TAG=${DOCKER_IMAGE}:${BUILD_NUMBER}
 		  	    docker build -t $IMAGE_TAG .
