@@ -9,20 +9,21 @@ spec:
   selector:
     matchLabels:
       app: green-deployment
+      color: green
   template:
     metadata:
       labels:
         app: green-deployment
         color: green
-  spec:
-    containers:
-    - name: green-deploy-pods
-      image: ambarbhore1234/rmm-agent:45
-      ports:
-      - containerPort: 8080
-      readinessProbe:
-        httpGet:
-          path: /health
-          port: 8080
-        initialDelaySeconds: 5
-        periodSeconds: 10
+    spec:
+      containers:
+      - name: green-deploy-pods
+        image: ambarbhore1234/rmm-agent:45
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
