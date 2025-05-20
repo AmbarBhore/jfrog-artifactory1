@@ -5,8 +5,9 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: blue
+    app: blue-deploy
+    color: blue
   ports:
   - port: 80
-    targetPort: 808i
+    targetPort: 8080
     nodePort: 30010
