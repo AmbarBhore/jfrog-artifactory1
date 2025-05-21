@@ -65,7 +65,7 @@ pipeline {
 				kubectl apply -f k8s/service.yaml
 				
 				echo "updating image with build tag: $BUILD_NUMBER"
-				kubectl set image deployment/rmm-agent-jfrog-deploy rmm-agent-jfrog-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
+				kubectl set image deployment/blue-deploy rmm-agent-jfrog-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
 			     '''
 			}
 		}
