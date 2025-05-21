@@ -61,7 +61,7 @@ pipeline {
 				
 				echo "Applying deployment and service"
 				kubectl apply -f k8s/blue-deployment.yaml
-				kubectl apply -f k8s/green-deploy.yaml
+			
 				kubectl apply -f k8s/service.yaml
 				
 				echo "updating image with build tag: $BUILD_NUMBER"
