@@ -1,3 +1,9 @@
+properties([
+	parameters([
+		string(name: 'ROLLBACK_BUILD', defaultvalue: '', description: 'Optional roll back to specific version'
+	])
+])                
+
 pipeline {
     agent any
     environment {
@@ -64,13 +70,25 @@ pipeline {
 				kubectl apply -f k8s/green-deploy.yaml
 				kubectl apply -f k8s/green-service.yaml
 				kubectl apply -f k8s/service.yaml
-				
-				echo "updating image with build tag: $BUILD_NUMBER"
-				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
-				kubectl set image deployment/green-deployment green-deploy-pods=$DOCKER_IMAGE:$BUILD_NUMBER --record
 			     '''
+			     if (params.ROLLBACK_BUILD) {
+				// ROLLBACK CASE
+				sh """
+				echo "🔁 Rolling back blue deployment to build ${params.ROLLBACK_BUILD}"
+				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:${params.ROLLBACK_BUILD} --record
+			        kubectl rollout status deployment/green-deployment
+			        """
+			     }else {
+				// NORMAL DEPLOYING CASE
+				sh """
+				
+				echo "updating image with normal build tag: $BUILD_NUMBER"
+				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
+				kubectl rollout status deployment/blue-deploy
+			     """
 			}
 		}
 	}	
+    }
     }
 }
