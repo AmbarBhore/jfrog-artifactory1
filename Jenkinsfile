@@ -67,6 +67,7 @@ pipeline {
 				
 				echo "updating image with build tag: $BUILD_NUMBER"
 				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
+				kubectl set image deployment/green-deployment green-deployment=$DOCKER_IMAGE:$BUILD_NUMBER --record
 			     '''
 			}
 		}
