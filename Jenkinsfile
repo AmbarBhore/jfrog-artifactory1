@@ -76,6 +76,8 @@ pipeline {
 			     if (params.ROLLBACK_BUILD) {
 				// ROLLBACK CASE
 				sh """
+				export KUBECONFIG=$kubeconfig
+
 				echo "🔁 Rolling back blue deployment to build ${params.ROLLBACK_BUILD}"
 				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:${params.ROLLBACK_BUILD} --record
 			        kubectl rollout status deployment/green-deployment
@@ -84,6 +86,8 @@ pipeline {
 				// NORMAL DEPLOYING CASE
 				sh """
 				
+				export KUBECONFIG=$kubeconfig
+
 				echo "updating image with normal build tag: $BUILD_NUMBER"
 				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
 				kubectl rollout status deployment/blue-deploy
