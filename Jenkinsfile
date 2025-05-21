@@ -1,6 +1,6 @@
 properties([
 	parameters([
-		string(name: 'ROLLBACK_BUILD', defaultvalue: '', description: 'Optional roll back to specific version'
+		string(name: 'ROLLBACK_BUILD', defaultvalue: '', description: 'Optional roll back to specific version')
 	])
 ])                
 
