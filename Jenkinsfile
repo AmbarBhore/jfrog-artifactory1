@@ -80,7 +80,7 @@ pipeline {
 				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:${params.ROLLBACK_BUILD} --record
 			        kubectl rollout status deployment/green-deployment
 			        """
-			     }else {
+			     } else {
 				// NORMAL DEPLOYING CASE
 				sh """
 				
