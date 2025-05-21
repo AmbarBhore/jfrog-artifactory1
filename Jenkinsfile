@@ -59,18 +59,20 @@ pipeline {
 	stage("Deploy to kubernetes") {
 		steps {
 			withCredentials([file(credentialsId: "${KUBECONFIG_CRED_ID}", variable: 'kubeconfig')]) {
+			  scripts {
 			     sh '''
-				export KUBECONFIG=$kubeconfig
+			     export KUBECONFIG=$kubeconfig
 		
-				kubectl config current-context
-				kubectl get nodes
+			     kubectl config current-context
+		             kubectl get nodes
 				
-				echo "Applying deployment and service"
-				kubectl apply -f k8s/blue-deployment.yaml
-				kubectl apply -f k8s/green-deploy.yaml
-				kubectl apply -f k8s/green-service.yaml
-				kubectl apply -f k8s/service.yaml
+			     echo "Applying deployment and service"
+			     kubectl apply -f k8s/blue-deployment.yaml
+			     kubectl apply -f k8s/green-deploy.yaml
+			     kubectl apply -f k8s/green-service.yaml
+			     kubectl apply -f k8s/service.yaml
 			     '''
+				
 			     if (params.ROLLBACK_BUILD) {
 				// ROLLBACK CASE
 				sh """
@@ -85,10 +87,11 @@ pipeline {
 				echo "updating image with normal build tag: $BUILD_NUMBER"
 				kubectl set image deployment/blue-deploy blue-deploy=$DOCKER_IMAGE:$BUILD_NUMBER --record
 				kubectl rollout status deployment/blue-deploy
-			     """
-			}
-		}
-	}	
-    }
-    }
+			     	"""
+			    }
+		          }
+			}	
+	    	}
+    	}
+     }
 }
